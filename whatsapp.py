@@ -1,21 +1,26 @@
-""" Implicit Wait """
-from selenium import webdriver 
-from selenium.webdriver.common.keys import Keys 
 import time 
 import sys
 import os
 
-""" for firefox """
-os.environ['MOZ_HEADLESS'] = '1'
-profile = webdriver.FirefoxProfile('/home/sirius0027/.mozilla/firefox/m2iyw7tf.default')
-driver = webdriver.Firefox(executable_path = '../firefox/geckodriver', firefox_profile = profile)
+from selenium import webdriver 
+from selenium.webdriver.common.keys import Keys 
 
-""" for chrome """
-# options = webdriver.ChromeOptions()
-# options.add_argument('user-data-dir=/home/sirius0027/.config/google-chrome/')
-# # options.add_argument('headless')
-# # options.add_argument('window-size=1920x1080')
-# driver = webdriver.Chrome(executable_path = '../chrome/chromedriver', options = options)
+
+IS_FIREFOX = True
+
+if IS_FIREFOX:
+    os.environ['MOZ_HEADLESS'] = '1'
+    profile = webdriver.FirefoxProfile('/home/sirius0027/.mozilla/firefox/\
+m2iyw7tf.default')
+    driver = webdriver.Firefox(executable_path='../firefox/geckodriver',
+                               firefox_profile=profile)
+else:
+    options = webdriver.ChromeOptions()
+    options.add_argument('user-data-dir=/home/sirius0027/.config/\
+google-chrome/')
+    options.headless = True
+    driver = webdriver.Chrome(executable_path = '../chrome/chromedriver',
+                              options = options)
 
 driver.implicitly_wait(60)
 target = sys.argv[1]
